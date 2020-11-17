@@ -36,7 +36,7 @@ public class Exer3 extends Application {
         return lbl1;
     }
      
-    private ImageView InsertImages() throws FileNotFoundException {
+    private ImageView InsertImages_External() throws FileNotFoundException {
         Image img_external=new Image("https://homepages.cae.wisc.edu/~ece533/images/fruits");
         ImageView imgview=new ImageView(img_external);
          imgview.setFitHeight(600);
@@ -44,7 +44,7 @@ public class Exer3 extends Application {
          return imgview;
     }
 
-    private ImageView InsertImages_External() throws FileNotFoundException {
+    private ImageView InsertImages_Local() throws FileNotFoundException {
       InputStream in = new FileInputStream("E:\\Computer Science_University\\Sem6- October Fall 2020\\Advanced Java Lab\\AJlab2021\\s.jpeg");
         Image img_Local=new Image(in);
         ImageView img_External=new ImageView(img_Local);
@@ -58,8 +58,8 @@ public class Exer3 extends Application {
        
         TextField txt1=CreateText();
         Label lbl1=CreateLabel(txt1);
-        ImageView imgview=InsertImages();
-        ImageView imgview2=InsertImages_External();
+        ImageView imgview=InsertImages_External();
+        ImageView imgview2=InsertImages_Local();
    
         HBox pane2=new HBox(10);
         pane2.getChildren().addAll(imgview,imgview2);

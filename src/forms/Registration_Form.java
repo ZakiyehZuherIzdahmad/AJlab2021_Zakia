@@ -23,6 +23,72 @@ import javafx.stage.Stage;
 
 public class Registration_Form extends Application {
     
+     boolean hasCap=false,hasLow=false,hasDig=false,hasSpecialChar=false,FLAG=true;
+     char c; 
+     private void ValidateName_KeyEvent(TextField TF_Name, Text txt_Alert) {
+        TF_Name.setOnKeyReleased(e->{
+            txt_Alert.setText("");
+            if(!(TF_Name.getText().matches("^[a-zA-Z]*$"))){
+                txt_Alert.setText(txt_Alert.getText()+"\n Name must not have digits");}
+        });}
+
+    private void ValidateEmail_KeyEvent(TextField TF_Email, Text txt_Alert) {
+        TF_Email.setOnKeyReleased(e->{
+            txt_Alert.setText("");
+            if(!(TF_Email.getText().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com"))){
+                txt_Alert.setText(txt_Alert.getText()+"\n Valid Email (it has @ and dot characters).");}
+        });
+    }
+    private void ValidatePhoneNumber_KeyEvent(TextField TF_Phone, Text txt_Alert) {
+        TF_Phone.setOnKeyReleased(e->{
+            txt_Alert.setText("");
+            if(!(TF_Phone.getText().matches("[0-9]") || TF_Phone.getText().length()==8)){
+                txt_Alert.setText(txt_Alert.getText()+"\n Invalid Phone Number (8 digit only)");
+               }
+        });
+    }
+    private void ValidateStronPassword_KeyEvent(PasswordField TF_Password, Text txt_Alert) {
+        TF_Password.setOnKeyReleased(e->{
+            txt_Alert.setText("");
+            if(((TF_Password.getText().length()>=8))){
+                for(int i=0;i<TF_Password.getText().length();i++){
+                    c=TF_Password.getText().charAt(i);
+                    if(Character.isDigit(c))
+                        hasDig=true;
+                    if(Character.isUpperCase(c))
+                        hasCap=true;
+                    if(Character.isLowerCase(c))
+                        hasLow=true;
+                    if(TF_Password.getText().contains("[!@#$%&*()_+=|<>?{}\\[\\]~-]"))
+                        hasSpecialChar=true;
+                    /*OR
+                    Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+                    Matcher hasSpecial = special.matcher(TF_Password.getText());*/
+                }}
+            if(hasCap==false && hasLow==false && hasDig==false && hasSpecialChar==false) {
+                txt_Alert.setText(txt_Alert.getText()+"\n Password should Contains at least one capital letter, one small letter, one digit and minimum length is 8");
+            }
+        });
+    }
+
+    private void ValidateConfirmPassword_KeyEvent(PasswordField TF_Confirm, Text txt_Alert, PasswordField TF_Password) {
+        TF_Confirm.setOnKeyReleased(e->{
+            txt_Alert.setText("");
+            if (!(TF_Confirm.getText().equals(TF_Password.getText()))){
+                txt_Alert.setText(txt_Alert.getText()+"\n Password doesn't match");
+               }
+        });
+    }
+
+    private void ValidateAboutYou_KeyEvent(TextArea TA_AboutYou, Text txt_Alert) {
+        TA_AboutYou.setOnKeyReleased(e->{
+            txt_Alert.setText("");
+            if (!(TA_AboutYou.getText().length()>=50)){
+                txt_Alert.setText(txt_Alert.getText()+"\n About You: at least 50 characters.");
+                }
+        });
+    }
+    
     @Override
     public void start(Stage primaryStage) {
         
@@ -79,20 +145,24 @@ public class Registration_Form extends Application {
         Button btn_Register=new Button("Register");
         btn_Register.setPrefWidth(500);
         
+        ValidateName_KeyEvent(TF_Name, txt_Alert);
+        ValidateEmail_KeyEvent(TF_Email, txt_Alert);
+        ValidatePhoneNumber_KeyEvent(TF_Phone, txt_Alert);
+        ValidateStronPassword_KeyEvent(TF_Password, txt_Alert);
+        ValidateConfirmPassword_KeyEvent(TF_Confirm, txt_Alert, TF_Password);
+        ValidateAboutYou_KeyEvent(TA_AboutYou, txt_Alert);
+        
         btn_Register.setOnAction(e->{
                     txt_Alert.setText("");
-                    boolean hasCap=false,hasLow=false,hasDig=false,hasSpecialChar=false,FLAG=true;
-                    char c; 
-
                     //Validate Name
                     if(!(TF_Name.getText().matches("^[a-zA-Z]*$"))){
                           txt_Alert.setText(txt_Alert.getText()+"\n Name must not have digits");
                           FLAG=false;}
                     
                     //Validate Email
-                    if(!(TF_Email.getText().contains("@") && TF_Email.getText().contains("."))){
-                          txt_Alert.setText(txt_Alert.getText()+"\n Valid Email (it has @ and dot characters).");
-                          FLAG=false;}
+                          if(!(TF_Email.getText().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com"))){
+                               txt_Alert.setText(txt_Alert.getText()+"\n Valid Email (it has @ and dot characters).");
+                               FLAG=false;}
                     
                     //Validate Phone Number
                     if(!(TF_Phone.getText().matches("[0-9]") || TF_Phone.getText().length()==8)){
@@ -128,20 +198,25 @@ public class Registration_Form extends Application {
                         if(Cmb_Country.getSelectionModel​().isEmpty()){
                                txt_Alert.setText(txt_Alert.getText()+"\n Country: must be selected"); 
                                FLAG=false;}
-
+                        
+                        //Validate About You
                         if (!(TA_AboutYou.getText().length()>=50)){
                                 txt_Alert.setText(txt_Alert.getText()+"\n About You: at least 50 characters.");
                                 FLAG=false;}
                         
-                        //If All Field Validated
+            
+                        //If All Field Validated*/
                         if(FLAG==true){
+                            System.out.println("Flag true");
                             Alert a = new Alert(AlertType.CONFIRMATION, "", new ButtonType("OK"));
                             a.setTitle("Confirm Registration");
                             a.setHeaderText("Succesfully registerd");
                            // a.setContentText("Content text");
                             a.showAndWait();}
-          });
-        
+                        //else
+                          //  System.out.println("Flag falseeeeeeee&");
+          });   
+      
         form_Reg.addColumn(0, txt_Name,txt_Email,txt_Phone,txt_Password,txt_Confirm,txt_Country,txt_Gender,txt_Language,txt_About);
         form_Reg.addColumn(1, TF_Name,TF_Email,TF_Phone,TF_Password,TF_Confirm,Cmb_Country);
         form_Reg.add(HB_Rdb, 1, 6);
@@ -155,6 +230,7 @@ public class Registration_Form extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
     public static void main(String[] args) {
         launch(args);
     }

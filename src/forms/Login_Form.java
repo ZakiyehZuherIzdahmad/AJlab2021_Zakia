@@ -1,5 +1,7 @@
 package forms;
 import javafx.application.Application;
+import static javafx.application.Application.STYLESHEET_CASPIAN;
+import static javafx.application.Application.launch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,9 +22,10 @@ import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 
 public class Login_Form extends Application {
-    
+    public Scene scene_LoginForm;
+    public Stage PrimaryStage_Login;
     /*"https://picsum.photos/200".*/
-        private static final Background BACKGROUND_Fill = new Background(new BackgroundFill(Color.DARKSEAGREEN, new CornerRadii(10),new Insets(10) ));
+     private static final Background BACKGROUND_Fill = new Background(new BackgroundFill(Color.DARKSEAGREEN, new CornerRadii(10),new Insets(10) ));
         
     private Label CreateLabel_Login() {
         Label label_Login=new Label("Login Form");
@@ -39,19 +42,20 @@ public class Login_Form extends Application {
         btnLogin.setPadding(new Insets(15));
         btnLogin.setMaxWidth(150);
         
-        btnLogin.setStyle("-fx-background-color: linear-gradient(lightgreen, #be1d00);-fx-font-size:18px;font-weight:bold;-fx-background-radius: 10; -fx-background-insets: 0;\n" +
-                "    -fx-text-fill: white;");
+       btnLogin.setStyle("-fx-background-color: linear-gradient(lightgreen, #be1d00);-fx-font-size:18px;font-weight:bold;-fx-background-radius: 10; -fx-background-insets: 0;\n" +
+             "    -fx-text-fill: white;");
         return btnLogin;
     }
 
+       
     @Override
     public void start(Stage primaryStage) {
-        
+        PrimaryStage_Login=primaryStage;
         Label label_Login=CreateLabel_Login();
         Button btnLogin=CreateButtonLogin();
         
         ImageView imgView=new ImageView(new Image("https://picsum.photos/200"));
-       imgView.setStyle("-fx-border-radius: 5;");
+        imgView.setStyle("-fx-border-radius: 5;");
          
         Label lblUserName=new Label("Username:");
         lblUserName.setContentDisplay(ContentDisplay.CENTER);
@@ -74,7 +78,7 @@ public class Login_Form extends Application {
         loginForm.setPadding(new Insets(20));//pading outside the gridPane
         loginForm.setVgap(30);
         loginForm.setHgap(20);
-        loginForm.setBackground(BACKGROUND_Fill);   
+       // loginForm.setBackground(BACKGROUND_Fill);   
         loginForm.setAlignment(Pos.CENTER);
         loginForm.setHalignment(imgView, HPos.CENTER); // To align horizontally in the cell
   
@@ -89,14 +93,27 @@ public class Login_Form extends Application {
         
         loginForm.add(lblPassword, 0, 3);
         loginForm.add(txttPassword, 1, 3);
-       
-        loginForm.add(btnLogin, 1, 4);
+        //loginForm.add(btnLogin, 1, 4);
+        
+         Button btnReg=new Button("Regiter");
+         btnReg.setStyle("-fx-background-color: linear-gradient(lightgreen, #be1d00);-fx-font-size:18px;font-weight:bold;-fx-background-radius: 10; -fx-background-insets: 0;\n" +
+                "-fx-text-fill: white;");
+         loginForm.add(btnReg, 1, 5);
+         
+         Button btn_ReturnToMain=new Button("Return To Main");
+           btn_ReturnToMain.setOnAction(e->{
+                MainPage mainPage=new MainPage();
+                mainPage.start(primaryStage);
+        });
+        
+        loginForm.add(btn_ReturnToMain, 1, 4);
+        
       // loginForm.getChildren().addAll(label,imgView,lblUserName,txttUserName,lblPassword,txttPassword);
        
-      Scene scene1=new Scene(loginForm,500,550);
-        primaryStage.setScene(scene1);
-        primaryStage.setTitle("LOGIN Form");
-        primaryStage.show();
+        scene_LoginForm=new Scene(loginForm,900,700);
+        PrimaryStage_Login.setScene(scene_LoginForm);
+        PrimaryStage_Login.setTitle("LOGIN Form");
+        PrimaryStage_Login.show();
     }
 
     public static void main(String[] args) {

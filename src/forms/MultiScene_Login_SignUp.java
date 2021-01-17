@@ -41,8 +41,10 @@ public class MultiScene_Login_SignUp extends Application {
             Button btn2 = new Button("Sign Up");
             Button btnReg=new Button("Don't have an account yet?");
             Button btn_Already=new Button("Already have an account?"); 
+            
             Label label_Login=CreateLabel_Login();
-            Button btnLogin=CreateButtonLogin();  
+            Button btnLogin=CreateButtonLogin();
+            
             private static final Background BACKGROUND_Fill = new Background(new BackgroundFill(Color.DARKSEAGREEN, new CornerRadii(10),new Insets(10) ));
             boolean hasCap=false,hasLow=false,hasDig=false,hasSpecialChar=false,FLAG=true;
             char c; 
@@ -179,7 +181,7 @@ public class MultiScene_Login_SignUp extends Application {
     }
 
     private Scene Reg_Form_Scene() {
-         form_Reg = new GridPane();
+        form_Reg = new GridPane();
         form_Reg.setPadding(new Insets(20));
         form_Reg.setHgap(10);
         form_Reg.setVgap(20);
@@ -352,6 +354,7 @@ public class MultiScene_Login_SignUp extends Application {
         btnReg.setPadding(new Insets(15));
         btnReg.setMaxWidth(100);
         loginForm.add(btnReg,2,4);
+        
         
         
         // loginForm.getChildren().addAll(label,imgView,lblUserName,txttUserName,lblPassword,txttPassword);

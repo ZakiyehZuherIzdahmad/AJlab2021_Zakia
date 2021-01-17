@@ -20,18 +20,24 @@ import javafx.stage.Stage;
 
 public class User_Registration_Form extends Application {
     boolean hasCap=false,hasLow=false,hasDig=false,hasSpecialChar=false,FLAG=true;
-     char c; 
-     
+    char c; 
+    Scene sceneReg;//Scene Of Registration Form
+    Stage PrimaryStage_Registration;// PrimaryStage_Registration Of Registration Form
+    
+    Login_Form loginForm=new Login_Form();// Instance Of loginForm Class
+    
     @Override
     public void start(Stage primaryStage) {
-      
+        PrimaryStage_Registration=primaryStage;
+        
         GridPane form_Reg = new GridPane();
         form_Reg.setPadding(new Insets(20));
         form_Reg.setHgap(10);
         form_Reg.setVgap(20);
        // form_Reg.setGridLinesVisible(true);
+        sceneReg = new Scene(form_Reg, 700, 750);
         
-        Scene scene = new Scene(form_Reg, 700, 750);
+        //Create The needed Controls
         
         Text txt_Name=new Text("Name:");
         Text txt_Email=new Text("Email:");
@@ -77,9 +83,25 @@ public class User_Registration_Form extends Application {
         TextArea TA_AboutYou=new TextArea();
         TA_AboutYou.setPromptText("Your Biography....");
         
+        Button btn_Already=new Button("Already have an account?"); 
+        Button btn_ReturnToMain=new Button("Return To Main");
         Button btn_Register=new Button("Register");
-        btn_Register.setPrefWidth(scene.getWidth());
+
         
+        //Return To Login Form 
+        btn_Already.setPrefWidth(sceneReg.getWidth());
+        btn_Already.setOnAction(e->{
+            primaryStage.hide();
+            loginForm.start(primaryStage);
+        });
+        
+        btn_ReturnToMain.setOnAction(e->{
+            MainPage mainPage=new MainPage();
+            mainPage.start(primaryStage);
+        });
+        
+        
+    //Validate The registration From
         btn_Register.setOnAction(e->{
             txt_Alert.setText("");
             if (!(TF_Name.getText().equals("")))
@@ -142,12 +164,14 @@ public class User_Registration_Form extends Application {
         form_Reg.add(HB_Rdb, 1, 6);
         form_Reg.add(HB_chkBx, 1, 7);
         form_Reg.add(TA_AboutYou, 1, 8);
-        form_Reg.add(btn_Register, 0, 9, 2, 1);
+        form_Reg.add(btn_Register, 1, 9);
+        form_Reg.add(btn_Already, 0, 9);
+        form_Reg.add(btn_ReturnToMain, 0, 10);
         form_Reg.add(txt_Alert, 0, 10, 2, 1);
         
-        primaryStage.setTitle("Registration_Form");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        PrimaryStage_Registration.setTitle("Registration_Form");
+        PrimaryStage_Registration.setScene(sceneReg);
+        PrimaryStage_Registration.show();
     }
 
     private void Validate_About_You(TextArea TA_AboutYou, Text txt_Alert) {

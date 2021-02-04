@@ -26,6 +26,7 @@ import javafx.stage.Stage;
  */
 public class LoginForm_Temp extends Application {
     Alert alert=new Alert(Alert.AlertType.INFORMATION);
+    boolean flag=false;
     @Override
     public void start(Stage primaryStage) {
       Label lblUserName=new Label("Username:");
@@ -86,8 +87,9 @@ public class LoginForm_Temp extends Application {
                 while(Username.equals(scan.next())){
                     if(Password.equals(scan.next())){
                      alert.showAndWait();
-                     break;}
-                   // scan.close();
+                    flag=true;
+                    break;
+                    }
                     else{
                         alert=new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
@@ -100,17 +102,18 @@ public class LoginForm_Temp extends Application {
                                      
                 scan.nextLine();
            } 
+            
+            if(flag==false){
                     alert=new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("WARNING");
                     alert.setContentText("Incorrect Username, please enter a valid oneeeeeeeeeeee");
-                    alert.showAndWait();
+                    alert.showAndWait();}
 
-
+ scan.close();
             }
         
  catch (FileNotFoundException ex) {
-            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     System.out.println(StackTraceElement.class);        }
         
     }
     
